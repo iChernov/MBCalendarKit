@@ -37,10 +37,16 @@
 
 - (NSString *)monthAndYearOnCalendar:(NSCalendar *)calendar
 {
-    NSDateFormatter *f = [CKCache.sharedCache dateFormatterWithFormat:@"MMMM yyyy"];
+    NSDateFormatter *f = [CKCache.sharedCache dateFormatterWithFormat:@"MMMM"];
     f.calendar = calendar;
     f.locale = calendar.locale;
-    return [f stringFromDate:self];
+    NSString *month = [f stringFromDate:self];
+    
+    NSDateFormatter *f2 = [CKCache.sharedCache dateFormatterWithFormat:@"yyyy"];
+    f2.calendar = calendar;
+    f2.locale = calendar.locale;
+    NSString *year = [f stringFromDate:self];
+    return [NSString stringWithFormat:@"%@ %@", month, year];
 }
 
 - (NSString *)monthAbbreviationAndYearOnCalendar:(NSCalendar *)calendar

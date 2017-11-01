@@ -40,12 +40,12 @@
 /**
  The forward button.
  */
-@property (nonatomic, strong) MBPolygonView *forwardButton;
+@property (nonatomic, strong) UIView *forwardButton;
 
 /**
  The backward button.
  */
-@property (nonatomic, strong) MBPolygonView *backwardButton;
+@property (nonatomic, strong) UIView *backwardButton;
 
 // MARK: - Private Constraints
 
@@ -62,8 +62,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        _headerMonthTextFont = [UIFont boldSystemFontOfSize:[UIFont preferredFontForTextStyle:UIFontTextStyleHeadline
-                                                             ].pointSize];
+        _headerMonthTextFont = [UIFont systemFontOfSize:[UIFont preferredFontForTextStyle:UIFontTextStyleHeadline
+                                                         ].pointSize];
         _headerMonthTextColor = kCalendarColorHeaderMonth;
         _headerMonthTextShadow = kCalendarColorHeaderMonthShadow;
         _headerWeekdayTitleFont = [UIFont boldSystemFontOfSize:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1].pointSize];
@@ -263,7 +263,7 @@
  Constrains each label to a previous view, to achieve
  the effect of a row of equally sized labels, stretching
  across the width of the header view.
-
+ 
  @param label The label we're installing.
  @param previous The view to constraint to. Either `self` (for the first label) or another label (for the remaining labels.)
  */
@@ -384,7 +384,7 @@
 }
 
 /**
- Update contents and the highlighting 
+ Update contents and the highlighting
  of the month label, as appropriate.
  */
 - (void)_updateTitleLabelDisplay
@@ -423,7 +423,7 @@
  on the title label to make space for the column titles.
  
  @discussion In "day" mode, use the entire height for the month
- label. In week and month modes, add space for the weekday 
+ label. In week and month modes, add space for the weekday
  titles.
  */
 - (void)_adjustMonthLabelForColumnTitles
@@ -472,17 +472,17 @@
 
 /**
  Creates a polygon view to serve as a button.
-
+ 
  @param leadingOrTrailing A layout attribute to use to position the view. Either `NSLayoutAttributeLeading` or `NSLayoutAttributeTrailing`. Other attributes are undefined.
  @return An instance of MBPolygonView, configured and positioned inside `self`.
  */
-- (MBPolygonView *)createButtonConstrainedTo:(NSLayoutAttribute)leadingOrTrailing
+- (UIView *)createButtonConstrainedTo:(NSLayoutAttribute)leadingOrTrailing
 {
     BOOL isLeading = leadingOrTrailing == NSLayoutAttributeLeading;
     
     CGFloat rotation = isLeading ? 30.0 : 90.0;
     
-    MBPolygonView *polygonView = [[MBPolygonView alloc] initWithFrame:CGRectZero numberOfSides:3 andRotation:rotation andScale:10.0];
+    UIImageView *polygonView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:isLeading ? @"arrow-left" : @"arrow-right"]];
     
     polygonView.translatesAutoresizingMaskIntoConstraints = NO;
     
@@ -491,7 +491,7 @@
                                                               relatedBy:NSLayoutRelationEqual
                                                                  toItem:self.titleLabel
                                                               attribute:NSLayoutAttributeHeight
-                                                             multiplier:1.0
+                                                             multiplier:0.5
                                                                constant:0.0];
     
     NSLayoutConstraint *width = [NSLayoutConstraint constraintWithItem:polygonView
@@ -499,7 +499,7 @@
                                                              relatedBy:NSLayoutRelationEqual
                                                                 toItem:polygonView
                                                              attribute:NSLayoutAttributeHeight
-                                                            multiplier:1.0 constant:0.0];
+                                                            multiplier:0.6 constant:0.0];
     
     NSLayoutConstraint *centerY = [NSLayoutConstraint constraintWithItem:polygonView
                                                                attribute:NSLayoutAttributeCenterY
@@ -515,7 +515,7 @@
                                                                  toItem:self
                                                               attribute:leadingOrTrailing
                                                              multiplier:1.0
-                                                               constant:0.0];
+                                                               constant: isLeading ? 5.0 : -5.0];
     anchor.identifier = @"Anchor Constraint";
     
     [self addSubview:polygonView];
@@ -594,7 +594,7 @@
 - (void)setHeaderGradient:(UIColor *)headerGradient {
     _headerGradient = headerGradient;
     
-    self.backgroundColor = headerGradient;
+    self.backgroundColor = [UIColor clearColor];
 }
 
 #pragma mark - Button Handling
@@ -642,3 +642,4 @@
 }
 
 @end
+
