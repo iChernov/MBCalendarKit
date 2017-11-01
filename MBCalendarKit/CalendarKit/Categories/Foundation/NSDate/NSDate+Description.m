@@ -45,7 +45,7 @@
     NSDateFormatter *f2 = [CKCache.sharedCache dateFormatterWithFormat:@"yyyy"];
     f2.calendar = calendar;
     f2.locale = calendar.locale;
-    NSString *year = [f stringFromDate:self];
+    NSString *year = [f2 stringFromDate:self];
     return [NSString stringWithFormat:@"%@ %@", month, year];
 }
 
