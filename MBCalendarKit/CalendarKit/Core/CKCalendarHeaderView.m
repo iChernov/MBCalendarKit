@@ -360,8 +360,8 @@
                                                                relatedBy:NSLayoutRelationEqual
                                                                   toItem:self
                                                                attribute:NSLayoutAttributeTop
-                                                              multiplier:1.0 constant:0.0];
-        
+                                                              multiplier:1.0 constant:-20.0];
+
         NSLayoutConstraint *leading = [NSLayoutConstraint constraintWithItem:self.titleLabel
                                                                    attribute:NSLayoutAttributeLeading
                                                                    relatedBy:NSLayoutRelationEqual
@@ -375,7 +375,7 @@
                                                                   relatedBy:NSLayoutRelationEqual
                                                                      toItem:self
                                                                   attribute:NSLayoutAttributeBottom
-                                                                 multiplier:1.0 constant:0.0];
+                                                                 multiplier:1.0 constant:20.0];
         
         self.titleLabelBottomPaddingConstraint = bottom;
         
@@ -400,7 +400,7 @@
 - (void)_updateTitleLabelText
 {
     NSString *title = [self.dataSource titleForHeader:self];
-    self.titleLabel.text = title;
+    self.titleLabel.text = [title uppercaseString];
 }
 
 /**
@@ -492,8 +492,8 @@
                                                                  toItem:self.titleLabel
                                                               attribute:NSLayoutAttributeHeight
                                                              multiplier:0.5
-                                                               constant:0.0];
-    
+                                                               constant:-15.0];
+
     NSLayoutConstraint *width = [NSLayoutConstraint constraintWithItem:polygonView
                                                              attribute:NSLayoutAttributeWidth
                                                              relatedBy:NSLayoutRelationEqual
@@ -515,7 +515,7 @@
                                                                  toItem:self
                                                               attribute:leadingOrTrailing
                                                              multiplier:1.0
-                                                               constant: isLeading ? 5.0 : -5.0];
+                                                               constant: isLeading ? 15.0 : -15.0];
     anchor.identifier = @"Anchor Constraint";
     
     [self addSubview:polygonView];
